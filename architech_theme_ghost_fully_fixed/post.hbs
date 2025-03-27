@@ -1,0 +1,30 @@
+
+{{!< default}}
+
+<article class="post-content max-w-3xl mx-auto py-12 px-4">
+  <header class="mb-6">
+    <h1 class="text-4xl font-bold mb-2">{{title}}</h1>
+    <div class="text-sm text-gray-600">
+      <span>{{date published_at format="MMMM D, YYYY"}}</span> · 
+      <span>{{reading_time}} min read</span>
+    </div>
+    {{#if tags}}
+      <div class="mt-2 space-x-2">
+        {{#foreach tags}}
+          <a href="{{url}}" class="inline-block text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">{{name}}</a>
+        {{/foreach}}
+      </div>
+    {{/if}}
+  </header>
+
+  {{#if feature_image}}
+    <figure class="mb-8">
+      <img src="{{feature_image}}" alt="{{title}}" class="rounded shadow">
+    </figure>
+  {{/if}}
+
+  <section class="prose max-w-none">
+    <aside class="gh-sidebar"><div class="gh-toc"></div></aside>
+{{content}}
+  </section>
+</article>

@@ -1,0 +1,97 @@
+
+{{!< default}}
+
+{{> "components/header" headerStyle="classic" }}
+
+<section class="w-full bg-gray-50 py-16">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to {{@site.title}}</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Your source for insights, updates, and thoughtful commentary.</p>
+  </div>
+</section>
+
+<section class="w-full py-12">
+  <div class="max-w-6xl mx-auto px-4">
+    {{> "components/featured" showFeatured=true limit=4}}
+  </div>
+</section>
+
+<section class="w-full py-12 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    {{> "components/post-list" feed="home" postFeedStyle="grid" showTitle=true showSidebar=false}}
+  </div>
+</section>
+
+<section class="w-full py-12 bg-gray-100">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    {{> "components/cta"}}
+  </div>
+</section>
+
+{{#if @custom.show_tools}}
+<section class="w-full py-12 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6">Recommended Tools</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {{#foreach posts filter="tag:tools"}}
+      <div class="border p-4 rounded-lg shadow hover:shadow-md transition">
+        <h3 class="text-lg font-semibold mb-2">{{title}}</h3>
+        <p class="text-sm text-gray-600">{{excerpt}}</p>
+        <a href="{{url}}" class="text-blue-600 text-sm mt-2 inline-block">View Tool →</a>
+      </div>
+      {{/foreach}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{#if @custom.show_ebooks}}
+<section class="w-full py-12 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6">Ebooks & White Papers</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {{#foreach posts filter="tag:ebooks"}}
+      <div class="border p-4 rounded-lg shadow hover:shadow-md transition">
+        <h3 class="text-lg font-semibold mb-2">{{title}}</h3>
+        <p class="text-sm text-gray-600">{{excerpt}}</p>
+        <a href="{{url}}" class="text-blue-600 text-sm mt-2 inline-block">Download →</a>
+      </div>
+      {{/foreach}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{#if @custom.show_products}}
+<section class="w-full py-12 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6">Digital Products</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {{#foreach posts filter="tag:products"}}
+      <div class="border p-4 rounded-lg shadow hover:shadow-md transition">
+        <h3 class="text-lg font-semibold mb-2">{{title}}</h3>
+        <p class="text-sm text-gray-600">{{excerpt}}</p>
+        <a href="{{url}}" class="text-blue-600 text-sm mt-2 inline-block">View Product →</a>
+      </div>
+      {{/foreach}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{#if @custom.show_classes}}
+<section class="w-full py-12 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6">Upcoming Classes</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {{#foreach posts filter="tag:classes"}}
+      <div class="border p-4 rounded-lg shadow hover:shadow-md transition">
+        <h3 class="text-lg font-semibold mb-2">{{title}}</h3>
+        <p class="text-sm text-gray-600">{{excerpt}}</p>
+        <a href="{{url}}" class="text-blue-600 text-sm mt-2 inline-block">Learn More →</a>
+      </div>
+      {{/foreach}}
+    </div>
+  </div>
+</section>
+{{/if}}
