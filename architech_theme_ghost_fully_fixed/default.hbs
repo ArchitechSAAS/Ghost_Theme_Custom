@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+
+    {{!-- Basic meta - advanced meta is output with 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.12.3/tocbot.css">
+<style>
+.gh-content { position: relative; }
+.gh-toc > .toc-list { position: relative; }
+.toc-list { overflow: hidden; list-style: none; }
+@media (min-width: 1300px) {
+  .gh-sidebar { position: absolute; top: 0; bottom: 0; margin-top: 4vmin; grid-column: wide-start / main-start; }
+  .gh-toc { position: sticky; top: 4vmin; }
+}
+.gh-toc .is-active-link::before {
+  background-color: var(--ghost-accent-color);
+}
+.reading-progress {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 5px;
+  background: #c5d2d9;
+  appearance: none;
+}
+.reading-progress::-webkit-progress-bar { background-color: transparent; }
+.reading-progress::-webkit-progress-value { background: var(--ghost-accent-color); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.12.3/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.gh-toc',
+    contentSelector: '.gh-content',
+    headingSelector: 'h1, h2, h3, h4',
+    hasInnerContainers: true
+  });
+</script>
+
+{{ghost_head}} below --}}
+    <title>{{meta_title}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {{!-- Preload main styles and scripts for better performance --}}
+    <link rel="preload" as="style" href="{{asset "built/screen.css"}}">
+    <link rel="preload" as="script" href="{{asset "built/source.js"}}">
+    
+    {{!-- Fonts are preloaded and defined in the default template to avoid layout shift --}}
+    {{> "typography/fonts"}}
+
+    {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
+    <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
+
+    {{!-- Custom background color --}}
+    <style>
+        :root {
+            --background-color: {{@custom.site_background_color}}
+        }
+    </style>
+
+    <script>
+        /* The script for calculating the color contrast has been taken from
+        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
+        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+        accentColor = accentColor.trim().slice(1);
+
+        if (accentColor.length === 3) {
+            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
+        }
+
+        var r = parseInt(accentColor.substr(0, 2), 16);
+        var g = parseInt(accentColor.substr(2, 2), 16);
+        var b = parseInt(accentColor.substr(4, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        var textColor = (yiq >= 128) ? 'dark' : 'light';
+
+        document.documentElement.className = `has-${textColor}-text`;
+    </script>
+
+    {{!-- This tag outputs all your advanced SEO meta, structured data, and other important settings, it should always be the last tag before the closing head tag --}}
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.12.3/tocbot.css">
+<style>
+.gh-content { position: relative; }
+.gh-toc > .toc-list { position: relative; }
+.toc-list { overflow: hidden; list-style: none; }
+@media (min-width: 1300px) {
+  .gh-sidebar { position: absolute; top: 0; bottom: 0; margin-top: 4vmin; grid-column: wide-start / main-start; }
+  .gh-toc { position: sticky; top: 4vmin; }
+}
+.gh-toc .is-active-link::before {
+  background-color: var(--ghost-accent-color);
+}
+.reading-progress {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 5px;
+  background: #c5d2d9;
+  appearance: none;
+}
+.reading-progress::-webkit-progress-bar { background-color: transparent; }
+.reading-progress::-webkit-progress-value { background: var(--ghost-accent-color); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.12.3/tocbot.min.js"></script>
+<script>
+  tocbot.init({
+    tocSelector: '.gh-toc',
+    contentSelector: '.gh-content',
+    headingSelector: 'h1, h2, h3, h4',
+    hasInnerContainers: true
+  });
+</script>
+
+{{ghost_head}}
+
+</head>
+<body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
+
+<div class="gh-viewport">
+    
+    {{> "components/navigation" navigationLayout=@custom.navigation_layout}}
+
+    {{{body}}}
+    
+    {{> "components/footer"}}
+    
+</div>
+
+{{#is "post, page"}}
+    {{> "lightbox"}}
+{{/is}}
+
+{{!-- Scripts - handle responsive videos, infinite scroll, and navigation dropdowns --}}
+<script src="{{asset "built/source.js"}}"></script>
+
+{{!-- Ghost outputs required functional scripts with this tag, it should always be the last thing before the closing body tag --}}
+
+{{#is "post"}}
+<script>
+  const progressBar = document.querySelector('.reading-progress');
+  function updateProgress() {
+    const totalHeight = document.body.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const position = window.scrollY;
+    const progress = (position / (totalHeight - windowHeight)) * 100;
+    if (progressBar) progressBar.setAttribute('value', progress);
+    requestAnimationFrame(updateProgress);
+  }
+  requestAnimationFrame(updateProgress);
+</script>
+{{/is}}
+
+{{ghost_foot}}
+
+</body>
+</html>

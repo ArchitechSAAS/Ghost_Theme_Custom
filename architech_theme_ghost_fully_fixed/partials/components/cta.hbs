@@ -1,0 +1,11 @@
+{{#if @site.members_enabled}}
+  {{#unless @member}}
+    {{#unless (match @custom.header_style "classic")}}
+      {{#unless (match @custom.header_style "Search")}}
+        {{#unless (match @custom.header_style "Off")}}
+          <section class="cta-section">Your CTA content here</section>
+        {{/unless}}
+      {{/unless}}
+    {{/unless}}
+  {{/unless}}
+{{/if}}
